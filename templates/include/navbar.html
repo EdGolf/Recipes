@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        <div class="navbar" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active text-light" aria-current="page" href="{% url 'home' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active text-light" aria-current="page" href="{% url 'recipe_list_all' %}">Все
+                        рецепты</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Рецепты по категориям
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for cat in categories %}
+                        <li>
+                            <a class="dropdown-item" href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link active text-light" aria-current="page" href="{% url 'recipe_list_my' %}">Мои
+                        рецепты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active text-light" aria-current="page" href="{% url 'recipe_create' %}">Добавить
+                        рецепт</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active text-light" aria-current="page"
+                        href="{% url 'category_create' %}">Добавить категорию</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="navbar" id="navbarRight">
+            <ul class="navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <div class="nav-link text-light">{{ user.username }}</div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}">Выход</a>
+                </li>
+                {% else %}
+                <li class="nav-item text-light">
+                    <a class="nav-link text-light" href="{% url 'login' %}">Вход</a>
+                </li>
+                <li class="nav-item text-light">
+                    <a class="nav-link text-light" href="{% url 'register' %}">Регистрация</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

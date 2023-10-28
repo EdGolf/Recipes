@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<form method="post" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form layout='horizontal' enctype='multipart/form-data' %}
+    <button href="http://127.0.0.1:8000/recipe/create/category/">Создать категорию</button>
+
+    {% bootstrap_button button_type="submit" content="Сохранить" %}
+</form>
+{% endblock %}

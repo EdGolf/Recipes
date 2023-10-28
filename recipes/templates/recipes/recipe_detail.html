@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<p>
+    {% if not request.user.pk == recipe.author_id %}
+    Автор: <a href="{% url 'recipe_list_by_author' recipe.author.username %}" role="button" class="btn btn-secondary"
+              style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .25rem;">
+    {{ recipe.author.username }}</a>
+</p>
+{% endif %}
+<p>
+    {% for cat in recipe.categories.all %}
+    <a href="{{ cat.get_absolute_url }}" role="button" class="btn btn-secondary"
+       style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+        {{ cat.name }}
+    </a>
+    {% endfor %}
+</p>
+<img src="{{ recipe.image.url }}" alt="recipe image" style="max-height:300px">
+<p>{{ recipe.description|linebreaksbr }}</p>
+<p>Время приготовления: {{ recipe.time }} мин</p>
+<h2>Ингридиенты</h2>
+<p>{{ recipe.ingredients|linebreaksbr }}</p>
+<h2>Как приготовить</h2>
+<p>{{ recipe.steps|linebreaksbr }}</p>
+
+{% if request.user.pk == recipe.author_id %}
+<a class="btn btn-primary mt-3" href="{% url 'recipe_update' recipe.slug %}" role="button">Редактировать</a>
+<a class="btn btn-danger mt-3" href="{% url 'recipe_delete' recipe.slug %}" role="button">Удалить</a>
+{% endif %}
+
+{% endblock %}
